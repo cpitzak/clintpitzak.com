@@ -87,6 +87,12 @@ a:focus {
   height: auto;
 }
 
+.app-list img {
+  display: block;
+  width: 350px;
+  height: auto;
+}
+
 .copy {
   display: inline-block;
   vertical-align: middle;
@@ -104,6 +110,13 @@ a:focus {
 
 .resume-item {
   margin-bottom: 12px;
+}
+.resume-item-app {
+  margin-bottom: 35px;
+}
+.resume-item-app-desc {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 .resume-item:last-child {
   margin-bottom: 0;
