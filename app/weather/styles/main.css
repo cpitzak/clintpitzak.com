@@ -1,0 +1,147 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+html {
+  background-color: hsl(220, 5%, 95%);
+  color: hsl(220, 10%, 10%);
+}
+
+hr.divider {
+    margin: 0em;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: hsl(220, 10%, 15%);
+    color: hsl(220, 10%, 90%);
+  }
+}
+
+body {
+  display: flex;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 100%;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: hsl(220, 65%, 45%);
+  text-decoration: none;
+  border-radius: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-left: -2px;
+  margin-right: -2px;
+  outline: none;
+  transition: all 0.15s ease-in-out;
+}
+a span {
+  border-bottom: 1px solid hsla(220, 65%, 45%, 0.2);
+  transition: all 0.15s ease-in-out;
+}
+a:hover span,
+a:focus span {
+  border-bottom-color: hsla(220, 65%, 45%, 1);
+}
+a:focus {
+  background-color: hsla(220, 65%, 45%, 0.1);
+}
+@media (prefers-color-scheme: dark) {
+  a {
+    color: hsl(220, 75%, 75%);
+  }
+  a span {
+    border-bottom-color: hsla(220, 75%, 75%, 0.4);
+  }
+  a:hover span,
+  a:focus span {
+    border-bottom-color: hsla(220, 75%, 75%, 1);
+  }
+  a:focus {
+    background-color: hsla(220, 75%, 75%, 0.2);
+  }
+}
+
+.me {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 24px;
+}
+
+.avatar {
+  flex: 0 0 auto;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.avatar img {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+
+.copy {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0;
+  text-align: left;
+  margin-top: 24px;
+  max-width: 480px;
+}
+
+.resume-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.resume-item {
+  margin-bottom: 12px;
+}
+.resume-item:last-child {
+  margin-bottom: 0;
+}
+
+.living-in {
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: hsl(220, 5%, 60%);
+}
+@media (prefers-color-scheme: dark) {
+  .living-in {
+    color: hsl(220, 5%, 65%);
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .me {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 48px;
+  }
+  .avatar {
+    margin-bottom: 0;
+  }
+  .avatar img {
+    width: 240px;
+  }
+  .copy {
+    margin-top: 0;
+    margin-left: 48px;
+  }
+  .living-in {
+    margin-top: 48px;
+  }
+}
