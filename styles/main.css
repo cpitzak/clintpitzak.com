@@ -87,6 +87,13 @@ a:focus {
   height: auto;
 }
 
+.app-list {
+  flex: 0 0 auto;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
 .app-list img {
   display: block;
   /* width: 350px; */
