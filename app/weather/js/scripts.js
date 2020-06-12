@@ -1,7 +1,8 @@
 fetch("https://8ilumi4c2b.execute-api.us-west-2.amazonaws.com/room-weather/weather", {
     mode: 'cors',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       }
 })
   .then(function (response) {
