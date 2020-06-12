@@ -8,8 +8,11 @@ function loadWeather() {
         return response.json();
     })
     .then(function (data) {
-        document.getElementById('temp-f').innerHTML = Math.round(data.temp_f * 10) / 10;
-        document.getElementById('humidity-percent').innerHTML = Math.round(data.humidity_percent * 10) / 10;
+        const temp = Math.round(data.temp_f * 10) / 10;
+        const humidity = Math.round(data.humidity_percent * 10) / 10;
+        document.getElementById('title').innerHTML = temp + '&degF, ' + humidity + '%';
+        document.getElementById('temp-f').innerHTML = temp;
+        document.getElementById('humidity-percent').innerHTML = humidity;
     })
     .catch(function (error) {
         console.log("Error: " + error);
