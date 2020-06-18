@@ -15,9 +15,12 @@
   <body>
     <div class="me">
       <div class="avatar" style="font-size: 5em">
-        <span id="temp-f"></span>&deg;F
-        <hr class="divider"/>
-        <span id="humidity-percent"></span>%
+        <div id="temp-reader" style="display: none;">
+          <span id="temp-f"></span>&deg;F
+          <hr class="divider"/>
+          <span id="humidity-percent"></span>%
+        </div>
+        <img id="spinner" src="img/spinner.gif">
       </div>
     </div>
     <script src="js/scripts.js"></script>

@@ -13,11 +13,18 @@ function loadWeather() {
         document.getElementById('title').innerHTML = temp + '&degF, ' + humidity + '%';
         document.getElementById('temp-f').innerHTML = temp;
         document.getElementById('humidity-percent').innerHTML = humidity;
+        const spinnerElem = document.getElementById('spinner');
+        if (spinnerElem) {
+            spinnerElem.remove();
+            const tempReaderElem = document.getElementById('temp-reader');
+            tempReaderElem.style = "";
+        }
     })
     .catch(function (error) {
         console.log("Error: " + error);
     });
 }
+load();
 loadWeather();
 setInterval(function() {
     loadWeather();
