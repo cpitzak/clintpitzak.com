@@ -15,7 +15,7 @@ function loadWeather() {
         document.getElementById('humidity-percent').innerHTML = humidity;
         const spinnerElem = document.getElementById('spinner');
         if (spinnerElem) {
-            spinnerElem.remove();
+            spinnerElem.parentNode.removeChild(spinnerElem);
             const tempReaderElem = document.getElementById('temp-reader');
             tempReaderElem.style = "";
         }
