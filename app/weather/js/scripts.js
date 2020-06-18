@@ -24,7 +24,6 @@ function loadWeather() {
         console.log("Error: " + error);
     });
 }
-load();
 loadWeather();
 setInterval(function() {
     loadWeather();
