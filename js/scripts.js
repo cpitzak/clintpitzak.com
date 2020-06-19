@@ -1,5 +1,5 @@
 function updateRepoCount() {
-    fetch("https://api.github.com/users/cpitzak/repos", {
+    fetch("https://api.github.com/users/cpitzak/repos?per_page=100", {
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
