@@ -27,4 +27,4 @@ function loadWeather() {
 loadWeather();
 setInterval(function() {
     loadWeather();
-}, 15000);
+}, 60000);
