@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+
+<html>
+
+
+<head>
+
+
+  <title>eeprojects : Challenges</title>
+
+
+
+
+
+ <meta content="Programming challenges to keep your mind sharp and your wit quick." name="description">
+
+
+
+
+
+  <meta content="programming, hacking, computer science, disassembly, c++, c, programming language, stack, pointers, hack, challenge, problems" name="keywords">
+
+
+
+
+
+
+
+
+
+
+
+  <link href="main.css" type="text/css" rel="STYLESHEET">
+
+
+
+
+
+  <meta content="MSHTML 6.00.2900.3059" name="GENERATOR">
+
+
+  <script type="text/javascript" src="prettify.js"></script>
+
+
+
+
+
+</head>
+
+
+
+
+
+
+
+
+<body onload="prettyPrint()">
+
+
+
+
+
+<div id="container">
+
+
+<div id="navigation">
+
+
+<ul>
+
+
+
+
+
+  <li><a href="">News</a> </li>
+
+
+
+
+
+  <li><a href="projects.html">Projects</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="videos.html">Videos</a></li>
+
+
+
+
+
+  <li><a href="coding.html">Code</a> </li>
+
+
+
+
+
+  <li><a href="./challenges.html">Challenges</a> </li>
+
+
+  <li><a href="./forums">Forums</a> </li>
+
+
+  <li><a href="offtopic.html">Off Topic</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="./links.html">Links</a></li>
+
+
+  <li><a href="contact.html">Contact</a> </li>
+
+
+
+
+
+</ul>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div id="contents">
+
+
+<h1 class="title">#56 Challenge - Bit Manipulation in C</h1>
+
+
+</div>
+
+
+</p>
+
+
+<p>
+
+
+<u>Credits</u>: Computer Systems: A Programmer's Perspective<br>
+
+
+<u>Authors</u>: Randal E. Bryant and David R. O'Hallaron<br>
+
+
+<u>Samples of book</u>: <a href="http://csapp.cs.cmu.edu/public/manuscript.html">http://csapp.cs.cmu.edu/public/manuscript.html</a><br>
+
+
+<b>Disclaimer:</b> I have written permission from the author to post his labs on my site.
+
+
+</p>
+
+
+Required files for this challenge: <a href="./datalab.tar.gz">datalab.tar.gz</a>
+
+
+<br> 
+
+
+<p>
+
+
+In this challenge your goal is to edit a series of functions in bits.c to mimic the behavior of bit Ands, Nors, etc... with restrictions to what operators
+
+
+you can use.<br><br>
+
+
+
+
+
+One of the functions in the bits.c  code is:<br>
+
+
+
+
+
+<pre class=prettyprint>
+
+
+/*
+
+
+ * bitAnd - x&y using only ~ and |
+
+
+ *   Example: bitAnd(6, 5) = 4
+
+
+ *   Legal ops: ~ |
+
+
+ *   Max ops: 8
+
+
+ *   Rating: 1
+
+
+ */
+
+
+int bitAnd(int x, int y) {
+
+
+  return 2;
+
+
+}
+
+
+</pre>
+
+
+
+
+
+<br>
+
+
+For the above code we want to return the value of x bitwise AND y with using only ~ and |<br>
+
+
+For this function we can solve it by doing ~(~x|~y). <br>
+
+
+<br>
+
+
+Then our solution would look like.
+
+
+<br><br>
+
+
+<pre class=prettyprint>
+
+
+/*
+
+
+ * bitAnd - x&y using only ~ and |
+
+
+ *   Example: bitAnd(6, 5) = 4
+
+
+ *   Legal ops: ~ |
+
+
+ *   Max ops: 8
+
+
+ *   Rating: 1
+
+
+ */
+
+
+int bitAnd(int x, int y) {
+
+
+  return ~(~x|~y);
+
+
+}
+
+
+</pre>
+
+
+
+
+
+<br>
+
+
+And we check our solution by recompiling and running this function on the test driver.
+
+
+<br><br>
+
+
+<pre class=prettyprint>
+
+
+linux > make clean; make btest
+
+
+linux > ./btest -f bitAnd
+
+
+Test bitAnd score: 1.00/1.00
+
+
+Overall correctness score: 1.00/1.00
+
+
+All tests passed.
+
+
+</pre>
+
+
+<br>
+
+
+If you want to test all the functions at once just type ./btest<br>
+
+
+<br>
+
+
+Each time you make changes to bits.c you must run make btest.
+
+
+
+
+
+
+
+
+</div><br>
+
+
+</body>
+
+
+</html>
+
+

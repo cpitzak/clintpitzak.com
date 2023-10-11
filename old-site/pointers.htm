@@ -1,0 +1,422 @@
+<html>
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="http://rafb.net/styles/nopaste.css"/>
+
+<link rel="icon" href="http://rafb.net/nopaste_favicon.gif" type="image/gif"/>
+
+<link rel="shortcut icon" href="http://rafb.net/nopaste_favicon.gif" type="image/gif"/>
+
+<meta name="robots" content="noarchive"/>
+
+<title>Nopaste - Understanding pointers</title>
+
+
+
+</head><div style="border-bottom: 2px solid gray;">
+
+<table border="0" cellpadding="1" cellspacing="2" width="100%">
+
+<tr>
+
+  <td><small>Pasted as <b>C89</b> by <b>net</b> <span id="controls">[ <a href="/paste/">Create new paste</a> | <a href="http://rafb.net/paste/remove.php?p=2mLTMq29&t=5f8b5f85713891fea7ee82381e75122b8c945740">Remove this paste</a> ]</span></small></td>
+
+</tr>
+
+<tr>
+
+  <td><small>Description: Understanding pointers</small></td>
+
+</tr>
+
+<tr>
+
+  <td><small>URL: http://rafb.net/p/2mLTMq29.html</small></td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+<table border="0" cellpadding="1" cellspacing="2">
+
+<tr>
+
+  <td><pre class="code">1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+27
+
+28
+
+29
+
+30
+
+31
+
+32
+
+33
+
+34
+
+35
+
+36
+
+37
+
+38
+
+39
+
+40
+
+41
+
+42
+
+43
+
+44
+
+45
+
+46
+
+47
+
+48
+
+49
+
+50
+
+51
+
+52
+
+53
+
+54
+
+55
+
+56
+
+57
+
+58
+
+59
+
+60
+
+61
+
+62
+
+63
+
+64
+
+65
+
+66
+
+67
+
+68
+
+69
+
+70
+
+71
+
+72
+
+73
+
+74
+
+75
+
+76
+
+77
+
+78
+
+79
+
+80
+
+81
+
+82
+
+83
+
+84
+
+85
+
+86
+
+87
+
+88
+
+89
+
+90
+
+91
+
+92</pre></td>
+
+  <td width="100%"><pre class="code" id="codemain">C code:
+
+&nbsp;
+
+<span class="keyword">int</span> MyFunction(<span class="keyword">int</span> argWord, <span class="keyword">int</span> word2)
+
+{
+
+    <span class="keyword">int</span> x = 9;
+
+    <span class="keyword">int</span> y = 5;
+
+&nbsp;
+
+    ...
+
+    ...
+
+    ...
+
+&nbsp;
+
+    <span class="keyword">return</span> localWord;
+
+}
+
+&nbsp;
+
+&nbsp;
+
+         Stack           Memory Address
+
+&nbsp;
+
+     |                  |0xffe8
+
+      ------------------
+
+sp ->|  5               |0xffea
+
+      ------------------
+
+     |  9               |0xffec
+
+      ------------------
+
+     | Saved Bp         |0xffee
+
+      ------------------
+
+bp ->| Return adddress  |0xfff0
+
+      ------------------
+
+     | argWord          |0xfff2
+
+      ------------------
+
+     | word2            |0xfff4
+
+      ------------------
+
+&nbsp;
+
+8086 architecture. Stack will grow to lower addresses
+
+&nbsp;
+
+&nbsp;
+
+Now let<span class="literal">'s change the code a little:
+
+</span>&nbsp;
+
+C code:
+
+&nbsp;
+
+<span class="keyword">int</span> MyFunction(<span class="keyword">int</span> argWord, <span class="keyword">int</span> word2)
+
+{
+
+    <span class="keyword">int</span> y = 22;
+
+    <span class="keyword">int</span> *x = &amp;y;
+
+&nbsp;
+
+    ...
+
+    ...
+
+    ...
+
+&nbsp;
+
+    <span class="keyword">return</span> localWord;
+
+}
+
+&nbsp;
+
+         Stack           Memory Address
+
+&nbsp;
+
+     |                  |0xffe8
+
+      ------------------
+
+sp ->|  0xffec          |0xffea
+
+      ------------------
+
+     |  22              |0xffec
+
+      ------------------
+
+     | Saved Bp         |0xffee
+
+      ------------------
+
+bp ->| Return adddress  |0xfff0
+
+      ------------------
+
+     | argWord          |0xfff2
+
+      ------------------
+
+     | word2            |0xfff4
+
+      ------------------
+
+&nbsp;
+
+Now <span class="keyword">if</span> I <span class="keyword">do</span> this:
+
+&nbsp;
+
+ *x = 12;
+
+&nbsp;
+
+the value of y changes to 12 and the stack looks like this:
+
+&nbsp;
+
+then the stack changes
+
+&nbsp;
+
+Stack                   Memory Address
+
+&nbsp;
+
+     |                  |0xffe8
+
+      ------------------
+
+sp ->|  0xffec          |0xffea
+
+      ------------------
+
+     |  12              |0xffec
+
+      ------------------
+
+     | Saved Bp         |0xffee
+
+      ------------------
+
+bp ->| Return adddress  |0xfff0
+
+      ------------------
+
+     | argWord          |0xfff2
+
+      ------------------
+
+     | word2            |0xfff4
+
+      ------------------</pre></td>
+
+</tr>
+
+</table>
+
+</html>
+

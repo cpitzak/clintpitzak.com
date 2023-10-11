@@ -1,0 +1,582 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+
+<html>
+
+
+<head>
+
+
+  <title>eeprojects : Projects</title>
+
+
+
+
+
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+
+  <link href="main.css" type="text/css" rel="STYLESHEET">
+
+
+
+
+
+  <meta content="MSHTML 6.00.2900.3059" name="GENERATOR">
+
+
+
+
+
+</head>
+
+
+
+
+
+
+
+
+
+
+<body>
+
+
+
+
+
+<div id="container">
+
+
+<div id="navigation">
+
+
+<ul>
+
+
+
+
+
+  <li><a href="">News</a> </li>
+
+
+
+
+
+  <li><a href="projects.html">Projects</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="videos.html">Videos</a></li>
+
+
+
+
+
+  <li><a href="coding.html">Code</a> </li>
+
+
+<li><a href="challenges.html">Challenges</a> </li>
+
+
+<li><a href="forums">Forums</a> </li>
+
+
+  <li><a href="offtopic.html">Off Topic</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="links.html">Links</a></li>
+
+
+  <li><a href="contact.html">Contact</a> </li>
+
+
+
+
+
+</ul>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- eeprojectsLinkBanner -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3383826651059118"
+     data-ad-slot="9948269291"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+</div>
+
+
+
+
+
+<div id="contents">
+
+
+<h1 class="title">FPGA Stopwatch</h1>
+
+
+
+
+
+<span style="font-weight: bold;">&nbsp; &nbsp;
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+ Author Clint Pitzak </span>
+
+
+<p><span style="font-weight: bold;"></span></p>
+
+
+
+
+
+<p><span style="font-weight: bold;">The
+
+
+&nbsp;Overall Design</span><span style="text-decoration: underline;"></span></p>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/counter.gif"><br>
+
+
+
+
+
+</p>
+
+
+
+
+
+<p><span style="font-weight: bold;"></span></p>
+
+
+
+
+
+<p style="font-weight: bold;">This below graphic show's
+
+
+how it will be implemented&nbsp;</p>
+
+
+
+
+
+<p style="font-weight: bold;">on the FPGA Board
+
+
+</p>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/counter_display.gif"></p>
+
+
+
+
+
+<p>We see that three buttons will be used, Start, Stop and Reset.
+
+
+Also we must remember to enable the decimal point to clearly separate
+
+
+minutes from seconds and seconds from tenths of a second. We rely on
+
+
+the decimal point to make the separation clear since the separator
+
+
+lines we see in our above graphic aren't on the actual <a href="http://i155.photobucket.com/albums/s306/eeprojects/spartan3.gif" target="_blank">FPGA</a> board.&nbsp;</p>
+
+
+
+
+
+<p>We are now ready to begin our FPGA Stop Watch project.</p>
+
+
+
+
+
+<p>1. Design and Simulate an SR latch.&nbsp;</p>
+
+
+
+
+
+<p>An SR latch (SR flip-flop) is a data storage device used to
+
+
+store a bit (1 or 0). The S stand for Set and the R stands for Reset.
+
+
+The SR latch is constructed of two cross-coupled NOR gates. S and R are
+
+
+our inputs and Q and Q' (Q Not) are our outputs.</p>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/SRlatch.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;SR latch</i></p>
+
+
+
+
+
+<p>We will use the S as our start and the R as our stop. In our
+
+
+verilog code Q will be named q_plus to denote that Q is our next state
+
+
+and Q' will simply be named q. Later we will feed the q_plus output to
+
+
+the <span style="font-style: italic;">Timer.</span><br>
+
+
+
+
+
+</p>
+
+
+
+
+
+<pre><code>module sr_latch ( s, r, q, q_plus );<br> input s, r;<br> output q_plus, q;<br> <br> nor (q_plus, r, q);<br> nor (q, s, q_plus);<br><br>endmodule<span style="font-family: verdana,arial,helvetica,sans-serif;"><br></span></code></pre>
+
+
+
+
+
+<p>
+
+
+2. Design a Mod6 and Mod10 counter.&nbsp;</p>
+
+
+
+
+
+<p>
+
+
+The truth table and boolean logic can be found <a href="logic.pdf">here</a>. Referring to the <span style="font-weight: bold;">Overall Design </span>graphic
+
+
+above, these counters will
+
+
+make up the&nbsp;<span style="font-style: italic;">Counter
+
+
+Block</span>.The Mod6 will be used for <span style="font-style: italic;">Second Tenths </span>and<span style="font-style: italic;"> Second Tens</span>. Our
+
+
+Mod10 will be used for <span style="font-style: italic;">Minute
+
+
+Ones and Second Ones.</span></p>
+
+
+
+
+
+<p><span style="font-style: italic;"></span>Our
+
+
+Mod6 and Mod10 counters should be place in separate verilog source code
+
+
+files.</p>
+
+
+
+
+
+<pre><code><br>module mod6 ( ce, q2, q1, q0, inc, clr, clk ); // ce is the Rollover<br> input inc, clr, clk;<br> output q0, q1, q2, ce; wire n2, n1, n0; assign n0 = (~q1 &amp; ~q0) | (~q2 &amp; ~q0);<br> <br> assign n1 = (~q2 &amp; ~q1 &amp; q0) | (~q2 &amp; q1 &amp; ~q0);<br> assign n2 = (q2 &amp; ~q1 &amp; ~q0) | (~q2 &amp; q1 &amp; q0);<br> </code><code>assign ce = (~clr &amp; inc &amp; q2 &amp; ~q1 &amp; q0); <br></code><code> <br> FF_DCE F0 (q0, clk, n0, clr, inc); FF_DCE F1 (q1, clk, n1, clr, inc);<br> FF_DCE F2 (q2, clk, n2, clr, inc);<br><br>endmodule </code></pre>
+
+
+
+
+
+<pre><code>module mod10 ( ce, q3, q2, q1, q0, inc, clr, clk ); // ce is the Rollover<br> input inc, clr, clk;<br> output q0, q1, q2, q3, ce;<br> wire n0, n1, n2, n3;<br><br> assign n0 = (~q3 &amp; ~q0) | (~q2 &amp; ~q1 &amp; ~q0);<br> assign n1 = (~q3 &amp; ~q1 &amp; q0) | (~q3 &amp; q1 &amp; ~q0);<br> assign n2 = (~q3 &amp; q2 &amp; ~q1) | (~q3 &amp; q2 &amp; ~q0) | (~q3 &amp; ~q2 &amp; q1 &amp; q0);<br> assign n3 = (q3 &amp; ~q2 &amp; ~q1 &amp; ~q0) | (~q3 &amp; q2 &amp; q1 &amp; q0);<br> </code><code>assign ce = (inc &amp; ~clr &amp; q3 &amp; ~q2 &amp; ~q1 &amp; q0);<br></code><code><br> FF_DCE FF0 (q0, clk, n0, clr, inc);<br> FF_DCE FF1 (q1, clk, n1, clr, inc);<br> FF_DCE FF2 (q2, clk, n2, clr, inc);<br> FF_DCE FF3 (q3, clk, n3, clr, inc);<br><br>endmodule </code></pre>
+
+
+
+
+
+<p>You will notice a module is used named&nbsp;FF_DCE in our
+
+
+Mod counters. This module is a flip flop with clear and clock
+
+
+functionality. The code for FF_DCE is provided below.
+
+
+</p>
+
+
+
+
+
+<pre><code>module FF_DCE(q, clk, d, clr, en);<br> input clk, clr, en, d;<br> output reg q;<br> <br> always @(posedge clk)<br> if (clr) q &lt;= 0;<br> else if (en) q &lt;= d;<br><br>endmodule<br></code></pre>
+
+
+
+
+
+<p>3. Build the Counter Block. We don't worry about applying our
+
+
+<a href="logic.pdf">timing calculations</a> for
+
+
+the 10MHz pulse in this phase. We can simply
+
+
+code<span style="font-style: italic;">&nbsp;inc</span>
+
+
+as the 10MHz pulse and we will apply our timing calculation later.</p>
+
+
+
+
+
+<pre><code>module counter_block ( Digit4TENTHS, Digit3SECOND_ONES, Digit2SECOND_TENS, Digit1MIN_ONES, inc, clr, clk );<br> </code><span id="t_kwd">input</span> <span id="t_idt">inc</span>, <span id="t_idt">clr</span>, <span id="t_idt">clk</span>;<br><code> output[3:0] Digit4TENTHS, Digit3SECOND_ONES, Digit2SECOND_TENS, Digit1MIN_ONES;<br> wire rollover1, rollover2, rollover3, last_rollover; // last_rollover used for leds [my own fun]<br> wire q0, q1, q2, a0, a1, a2, a3, b0, b1, b2, c0, c1, c2, c3;<br><br> mod6 TENTHS ( rollover1, q2, q1, q0, inc, clr, clk ); assign Digit4TENTHS = {1'b0, q2, q1, q0}; //making it a 4 bit number.<br> mod10 SECOND_ONES ( rollover2, a3, a2, a1, a0, rollover1, clr, clk );<br></code><code> mod10 MIN_ONES ( last_rollover, c3, c2, c1, c0, rollover3, clr, clk );<br><br></code><code> assign Digit3SECOND_ONES = {a3, a2, a1, a0}; mod6 TENS ( rollover3, b2, b1, b0, rollover2, clr, clk );<br> assign Digit2SECOND_TENS = {1'b0, b2, b1, b0};<br> assign Digit1MIN_ONES = {c3, c2, c1, c0};<br><br>endmodule <br></code></pre>
+
+
+
+
+
+<p>Below is a wave simulation the counter block.</p>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/thirdrollover.gif"><br>
+
+
+
+
+
+</p>
+
+
+
+
+
+<p>4. Now we make our program timer. &nbsp;The code for the
+
+
+program timer was written by a TA in my class.&nbsp;<span id="t_cns"><span style="font-style: italic;"></span></span></p>
+
+
+
+
+
+<pre><code>module prog_timer (clk, reset, clken, load_number, counter, zero, tp); <br> input clk, reset, clken;<br> input [23:0] load_number; <br> output reg [23:0] counter; <br> output reg zero, tp;<br>&nbsp;<br>wire cnt0; <br><br>assign cnt0 = ~(|counter); // is current count = 0?<br><br>always @(posedge clk or posedge reset)<br> &nbsp;if (reset == 1'b1) // on reset<br> begin<br> counter = load_number-1; // initialize counter with preload<br> zero = 1'b0; // clear ceo output<br> tp = 1'b0; // clear tp output<br> end<br> else if (cnt0 &amp; clken) // if count is 0<br> begin<br> counter = load_number-1; // initialize counter with preload<br> zero = 1'b1; // set the ceo output<br> tp = ~tp; // toggle the tp output<br> end<br> else if (clken) begin<br> counter = counter - 24'h000001; // decrement the counter<br> zero = 1'b0; // clear the ceo output<br> tp = tp; // maintain the tp output<br> end<br><br>endmodule <br></code></pre>
+
+
+
+
+
+<p>5. Complete the entire stopwatch. We will create a test bench
+
+
+module using:<br>
+
+
+
+
+
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; -the Counter Block<br>
+
+
+
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-the 10MHz timer
+
+
+&nbsp;(our program timer with our timing calculation.
+
+
+&nbsp;Setting loadnumber to <span id="t_cns">24'd4999999)<br>
+
+
+
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-the RS latch
+
+
+(controls start/stop functionality)<br>
+
+
+
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-the 4x7 segment
+
+
+controller (used from a past project, contact me if you want this
+
+
+module)<br>
+
+
+
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-3 buttons;
+
+
+start, stop and reset (pin out file, .ucf. Configuration depends on the
+
+
+FPGA you use)</span></p>
+
+
+
+
+
+<pre><code>module stopwatch_testbench ( Ca, Cb, Cc, Cd, Ce, Cf, Cg, AN0, AN1, AN2, AN3, DP, start, stop, reset, clk,<br> , , , ); //Dp0, Dp1, Dp2, Dp3<br> input start, stop, reset, clk;<br> output Ca, Cb, Cc, Cd, Ce, Cf, Cg, AN0, AN1, AN2, AN3, DP;<br><br> wire q_plus, q;<br> wire zero; <br> wire[3:0]Digit4TENTHS, Digit3SECOND_ONES, Digit2SECOND_TENS, Digit1MIN_ONES; //sr_latch ( s, r, q, q_plus );<br><br> sr_latch ONOROFF (start, stop, q, q_plus);<br><br> prog_timer STOPWATCH (clk, reset, q_plus, 24'd4999999, , zero, ); <br> counter_block COUNT ( Digit1MIN_ONES, Digit2SECOND_TENS, Digit3SECOND_ONES, Digit4TENTHS, zero, reset, clk ); <br><br> segment_control4to7 CONTROL ( Ca, Cb, Cc, Cd, Ce, Cf, Cg, AN0, AN1, AN2, AN3, DP, ,<br> Digit4TENTHS, Digit3SECOND_ONES, Digit2SECOND_TENS, Digit1MIN_ONES, clk, 1'b0, 1'b1, 1'b0, 1'b1 ); <br><br>endmodule<br></code></pre>
+
+
+
+
+
+<p>Below is a reading of the FPGA stopwatch on a <span style="font-style: italic;">oscilloscope. </span>An <span style="font-style: italic;">oscilloscope</span> is an
+
+
+electronic instrument that
+
+
+produces an instantaneous trace on the screen of a cathode-ray tube
+
+
+corresponding to oscillations of voltage and current.
+
+
+</p>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/oscope_screenshot.gif"></p>
+
+
+
+
+
+<p>If you want the entire .zip file for this project <a href="contact.html">contact</a> me.
+
+
+<br>
+
+
+
+
+
+<a href="#top">top of page</a>
+
+
+</p>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+<script type="text/javascript"><!--
+
+
+google_ad_client = "pub-3383826651059118";
+
+
+//728x90, created 12/27/07
+
+
+google_ad_slot = "9746314566";
+
+
+google_ad_width = 728;
+
+
+google_ad_height = 90;
+
+
+//--></script>
+
+
+<script type="text/javascript"
+
+
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+
+
+</script>
+
+
+</body>
+
+
+</html>
+
+

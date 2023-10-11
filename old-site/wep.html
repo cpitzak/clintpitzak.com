@@ -1,0 +1,1452 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+
+<html>
+
+
+<head>
+
+
+  <title>eeprojects.com : Security Analysis on Wep</title>
+
+
+
+
+
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+
+  <link href="main.css" type="text/css" rel="STYLESHEET">
+
+
+
+
+
+  <meta content="MSHTML 6.00.2900.3059" name="GENERATOR">
+
+
+
+</head>
+
+
+
+
+
+
+<body>
+
+
+
+
+
+<div id="container">
+
+
+<div id="navigation">
+
+
+<ul>
+
+
+
+
+
+  <li><a href="">News</a> </li>
+
+
+
+
+
+  <li><a href="projects.html">Projects</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="videos.html">Videos</a></li>
+
+
+
+
+
+  <li><a href="coding.html">Code</a> </li>
+
+
+<li><a href="challenges.html">Challenges</a> </li>
+
+
+<li><a href="forums">Forums</a> </li>
+
+
+
+
+
+  <li><a href="offtopic.html">Off Topic</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="links.html">Links</a></li>
+
+
+  <li><a href="contact.html">Contact</a> </li>
+
+
+
+
+
+</ul>
+
+
+
+</div>
+
+
+
+
+
+<div id="contents">
+
+
+<h1 class="title">Security Analysis on Wep</h1>
+
+
+
+
+
+<span style="font-weight: bold;">&nbsp; &nbsp;
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+&nbsp; &nbsp; &nbsp; &nbsp;  Author Clint Pitzak </span>
+
+
+<h1>Introduction</h1>
+
+
+
+
+
+<p>Over the
+
+
+years society has had
+
+
+the need for protecting their families. We build homes to keep out the
+
+
+elements. In those homes we put locks on the doors and windows to make
+
+
+them secure from intruders that would break through and rob the things
+
+
+that are most precious and private to us. We live in a day and age that
+
+
+has changed the rules. Now those locks on doors and windows are
+
+
+meaningless and have no effect. There is a much more sophisticated type
+
+
+of robbery. The robbery that cannot be heard, it steals silently
+
+
+through the space within our walls, coming from the outside world to
+
+
+our computer. Our lives have become so integrated with cyberspace. Now
+
+
+there is a more elaborate form of security that is needed.
+
+
+</p>
+
+
+
+
+
+<p>We now
+
+
+need to put digital locks on our internet connections to prevent
+
+
+intruders from intercepting sensitive data. The type of harm that can
+
+
+result from such an intrusion is severe. A successful intrusion can
+
+
+result in stolen identity, damaged credit and financial ruin among
+
+
+other things. Currently many people use the Wired Equivalent Privacy
+
+
+protocol (WEP) as a means to secure their network. Unfortunately this
+
+
+protocol provides little security and is easily compromised. The best
+
+
+way to know how to prevent someone from breaking into our house is to
+
+
+know how they will do it; this way we can prevent the occurrence before
+
+
+it happens. This paper will discuss the vulnerabilities with WEP and
+
+
+demonstrate how an intruder can successfully compromise a networking
+
+
+using it. This way we will know how to prevent intruders from getting
+
+
+into our private network. And lastly we will discuss other security
+
+
+protocols that should be used instead of WEP.</p>
+
+
+
+
+
+<h1>Background</h1>
+
+
+
+
+
+<p>
+
+
+An environment that uses WEP is a wireless local area network (WLAN). A
+
+
+basic WLAN consist of a modem (cable or DSL), a router, an access point
+
+
+and client (laptop, desktops, PDAs, cell phones, etc...). </p>
+
+
+
+
+
+<p>Wired Equivalent Privacy (WEP) is a security protocol for
+
+
+WLANs defined in the 802.11b standard. WEP is designed to protect
+
+
+against eavesdropping by encrypting data packets over radio waves being
+
+
+sent and received by the access point and clients. These data packets
+
+
+are encrypted by the RC4 stream cipher algorithm which was designed by
+
+
+Ron Rivest in 1987. The RC4 stream cipher algorithm was kept a secret
+
+
+until 1994 when an anonymous user posted it online. Since then many
+
+
+flaws in the algorithm have been found and exploited. This paper
+
+
+discusses how an attacker can locate a WLAN running WEP, capture
+
+
+packets being sent across the network, and use information from those
+
+
+packets to recover the WEP key. The estimated time of the attack is
+
+
+less then 5 minutes.</p>
+
+
+
+
+
+<h1>WLAN Setup</h1>
+
+
+
+
+
+<p> A wireless local area network is made up of an internet
+
+
+connection, a modem, a router, access point(s), and clients(s). The
+
+
+modem is connected to a phone line from which the internet access is
+
+
+provided by an ISP (Internet Service Provider). From the modem a router
+
+
+is connected which buffers and forwards packets across the network. A
+
+
+router is connected to at least two networks, in our case the ISP
+
+
+network and our WLAN. The location between these two networks is
+
+
+referred to as a gateway.</p>
+
+
+
+
+
+<p>Through forwarding tables and headers a router finds the
+
+
+correct path for packets to be sent. Connected to the router is an
+
+
+access point that broadcast packets through radio waves to client(s).
+
+
+Clients are desktop computers, laptops, PDA&rsquo;s, cell phones,
+
+
+and other devices that have a wireless network interface.</p>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/WLAN.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Example of a WLAN network setup (Fig. 1)</i></p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<h1>Wired Equivalent Privacy (WEP)</h1>
+
+
+
+
+
+<p>WEP is a protocol that adds security to a wireless local area
+
+
+networks (WLANs) based on 802.11 Wi-Fi standards. WEP was intended to
+
+
+give the same level of privacy as wired LANs. A wired LAN is a local
+
+
+area network where the clients are physically connected to a hub,
+
+
+switch, or router. The wired LAN is protected by physical walls such as
+
+
+buildings or homes that they are located in. Wireless LANs
+
+
+don&rsquo;t have the inherit protection as wired LANs do (walls)
+
+
+since the signal is broadcast through radio waves. WEP is designed to
+
+
+give the same inherit protect as a wired LAN by encrypting the data
+
+
+packets before they are sent over the network.</p>
+
+
+
+
+
+<p> The WEP security protocol utilizes the RC4 stream cipher
+
+
+algorithm to encrypt data packets. A secret key (WEP key) is shared
+
+
+between the access point and its clients. The secret key plus an
+
+
+initialization vector (IV) is used to encrypt the data packets. The
+
+
+initialization vector is a consciously changing number used to ensure
+
+
+two or more identical blocks of plaintext being encrypted
+
+
+don&rsquo;t create the same ciphertext. If the same ciphertext is
+
+
+created then an attacker can receptively view these encrypted data
+
+
+packets, trying to interpret the original value.</p>
+
+
+
+
+
+<p>When WEP first originated it supported 64 bit encryption then
+
+
+128 bit encryption and now some vendors provide 256 bits encryption.
+
+
+The bit size of the advertised encryption is misleading. For instance,
+
+
+the 128 bit encryption only has a 104 bit secret key size. The other 24
+
+
+bits make up the initialization vector which is transmitted in
+
+
+plaintext, meaning anyone can read it. Below (Fig. 1.1) you can see the
+
+
+secret key (40 bit or 104 bit) and IV (24 bit) combined (K) are used to
+
+
+encrypt the data packets (P) and checksum (CRC).</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/getfile_802.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Anatomy of a packet and encryption key
+
+
+(Fig. 1.1)</i></p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p> The data packets are encrypted and a CRC-32 (Cyclic
+
+
+Redundancy Code) applied before they are transmitted over the network
+
+
+by the access point or clients. The CRC-32 is a checksum used to ensure
+
+
+data integrity. The intent of CRC is to know if the data packet has
+
+
+been tampered with or corrupt. If it is corrupt or tampered with then
+
+
+the integrity check will not match up with the checksum. The 32
+
+
+represents the length of the checksum in bits. (Fleck 20).</p>
+
+
+
+
+
+<p>Once the message packet is received the receiver uses the IV
+
+
+and secret key to decrypt the data then verify the CRC-32 checksum for
+
+
+integrity.</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/encryption_layout_completecopy.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Wired Equivalency Privacy (WEP)
+
+
+Encryption and Decryption (Fig. 1.2)</i></p>
+
+
+
+
+
+<p>From the above graphic (Fig. 1.2) we can see that the secret
+
+
+key and IV make up what is known as the seed. The seed is then passed
+
+
+to the RC4 stream cipher algorithm to produce a keystream. The
+
+
+keystream is XORed with the data packet (plaintext) and CRC checksum to
+
+
+product the ciphertext. The ciphertext is then appended with the IV
+
+
+(see Fig. 1.1) and sent over the network. The receiver then decrypts
+
+
+the data packet and uses the CRC checksum to verify data integrity.</p>
+
+
+
+
+
+<h1>Weaknesses with WEP</h1>
+
+
+
+
+
+<p>One of the major flaws of WEP is how it addresses key
+
+
+management; everyone on the network uses the same secret key. This
+
+
+means that everyone on the network has the ability to decrypt data
+
+
+packets that are intended for other users or devices. In settings such
+
+
+as business or homes where new people are introduced to the network,
+
+
+data security declines. Even if a user only used the network once they
+
+
+can use it again at a latter time since they were given the secret key.
+
+
+It is suggested that network administrator changes the secret key after
+
+
+a set amount of days to prevent old users from accessing the network.</p>
+
+
+
+
+
+<p>Networks using the 40 bit encryption option of WEP are
+
+
+susceptible to a brute force attack. A brute force attack is where
+
+
+every possible combination of characters are used to guarantee a match
+
+
+after a duration of time. Generally brute force attacks take large
+
+
+amounts, from months to thousands of years. In our case the key space
+
+
+is only 2^40 (40 bit) which is just over 1 trillion possible keys.
+
+
+Although this is a large number the amount of time for a computer to
+
+
+search ever key in the key space of 2^40 is trivial (about an hour).</p>
+
+
+
+
+
+<p>If an attacker recovers two ciphertexts that are created with
+
+
+the same keystream, it is possible to generate the XOR of two resulting
+
+
+plaintexts (CT1 XOR CT2 = PT1 XOR PT2). If we can recover two of these
+
+
+ciphertext, we can use a statistically attack to decipher the other
+
+
+ciphertext on the network. And if the attacker obtains more ciphertexts
+
+
+that use the same keystream, the statistical attack has a higher
+
+
+probability of finding the secret key.</p>
+
+
+
+
+
+<p>The initialization vector (IV) is supposed to protect against
+
+
+the same keystream being used to encrypt data packets. However some
+
+
+vendor implementations use the same IV for all data packets during the
+
+
+connection lifespan. It is necessary to rotate the IV to avoid
+
+
+repetition of keystreams. However if the rotation is predictable it can
+
+
+result is a greater security flaw, giving the attacker a knowledge of
+
+
+what IV to use next. Even if the vendor does implement the IV well,
+
+
+keystreams will still be reused. This is because the IV space is only
+
+
+24 bit long. For example a network transmitting packets of 1800 bytes
+
+
+at 11Mbps will use up the 24 bit space of the IV in 3 hours 52 minutes
+
+
+and 43.64 seconds.</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/time_to_exhaust_ivspacecopy.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Time to exhaust IV space (Fig. 1.3)</i></p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>Another weakness deals with the checksum (CRC-32) WEP uses.
+
+
+Since CRC-32 is linear, an attacker can compute the bit difference of
+
+
+two checksums based on the difference of the data packet. This means if
+
+
+an attacker changes the encrypted data packet he can figure out the
+
+
+value that needs to be changed for the checksum. This results in the
+
+
+receiver thinking that the data is valid. An example of this is below;
+
+
+you can see that both images are difference. However the CRC-32
+
+
+checksum of both images have been manipulated to be the same, therefore
+
+
+the receiver will think they are the same.</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/crc_exploited.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Exploiting CRC-32 Weakness in WEP (Fig.
+
+
+1.4)</i></p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<h1>Attacking WEP</h1>
+
+
+
+
+
+<p>A Passive attack is where an attacker listens to message
+
+
+packets being sent and received from the access point and client,
+
+
+waiting for an IV to be reused (IV collision). As stated previously if
+
+
+an attacker receives two ciphertext that use the same keystream he can
+
+
+XOR the two ciphertext and receive the XOR of the two plaintexts. As
+
+
+the attacker receives more IV collisions he can use a program to
+
+
+statistically find the exact contents of the data packets and even the
+
+
+secret key used to encrypt them. We know that as a result of a small IV
+
+
+bit space (24 bits) there is a guarantee that IV collisions will occur
+
+
+over a duration of time. Another type of passive attack is implemented
+
+
+by sending traffic from a host on the internet to the wireless network,
+
+
+and then intercepting the encrypted reply. Since the attacker knows the
+
+
+contents of the message packet he sent he can better understand how to
+
+
+decrypt other data packets using the same IV. This method is both a
+
+
+passive attack and an active attack called packet injection.</p>
+
+
+
+
+
+<h1>Active Attack</h1>
+
+
+
+
+
+<p> Packet injection (re-injection or replay) is an active attack
+
+
+where the attacker intercepts a message packet, changes the value of
+
+
+both the data packet and checksum then sends it to the access point or
+
+
+clients. In order for this attack to work the attacker must know the
+
+
+plaintext of at least one ciphertext. Imagine the attacker is sitting
+
+
+with you at your keyboard editing what type on your computer against
+
+
+your will; packet injection attack can accomplish this. Packet
+
+
+injection is also used to speed up the amount of IV collisions that
+
+
+occur on a wireless network. If IV collisions occur more frequently
+
+
+then an attacker can find the secret key faster. This is because the
+
+
+probability of finding the secret key increases as IV collisions
+
+
+increases on a wireless network.</p>
+
+
+
+
+
+<h1>Performing the Attack</h1>
+
+
+
+
+
+<p>We need to make sure we have the correct hardware. We will
+
+
+need a wireless network card that supports both packet injection and
+
+
+monitor mode. Any prism2 based cards will work. Other cards are
+
+
+supported but usually require a specific hardware revision for them to
+
+
+work.</p>
+
+
+
+
+
+<p>Now that we have the correct hardware we must first locate a
+
+
+wireless network using the WEP security protocol. We can accomplish
+
+
+this by running a program called kismet. Kismet is an open source
+
+
+802.11 wireless network sniffer, locator and intrusion detection
+
+
+program that can be downloaded online for free. The environment that we
+
+
+will be working in is BackTrack, a distribution of Linux. Many tasks
+
+
+that we will perform can be accomplished in Windows also.</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/kismet-list_smallest.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Kismet, a WLAN sniffer, locator and
+
+
+intrusion detection system. (Fig. 1.5)</i></p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>We are now able to see the wireless networks in our area.
+
+
+Notice that not all of the IP address have been listed. This is because
+
+
+kismet hasn&rsquo;t received an ARP (address resolution Protocol)
+
+
+reply from all of the networks yet. On the left side we can see the
+
+
+SSID (service set identifier) which is the name of the network. By
+
+
+analyzing the rest of the information in the above picture we see the
+
+
+channel that the access point is broadcasting on, the amount of packets
+
+
+that are being sent and their size. We can also see if the wireless
+
+
+network is running WEP. If we highlight a SSID and hit enter we receive
+
+
+more information about the wireless network (see Fig 1.6).</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/kismet-writedown-small.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Expanded view of WLAN information (Fig.
+
+
+1.6)</i></p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>The most important information from the above figure is the
+
+
+SSID, BSSID (basic service set identifier), and network channel. The
+
+
+BSSID is the MAC address of the access point.</p>
+
+
+
+
+
+<p>A MAC (media access control) address is the physical address
+
+
+of a device. We will use this information with another program called
+
+
+airodump to monitor the message packets being sent across the wireless
+
+
+network. We will be looking for IV collisions for a statistical attack
+
+
+to find the secret key. We start airodump by typing airodump followed
+
+
+by our wireless network card interface, a file name to save the IV
+
+
+collisions, and the MAC address of the access point (see Fig. 1.7).</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/airodump-start.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Airodump a packet sniffer used for
+
+
+monitoring wireless networks. (Fig. 1.7)</i>
+
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>Once airodump has been started we can see the amount of
+
+
+packets that we are capturing and the number of IV collisions found
+
+
+(see Fig. 1.8).</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/airodump-iv.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Airodump capturing packets (Fig. 1.8)</i>
+
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>We want about 200,000~500,000 IVs, in order to stay within our
+
+
+estimated time we will re-inject an ARP requests on the wireless
+
+
+network into the access point 512 per second. We can use aireplay in
+
+
+combination with the ARP request we have captured from airodump to
+
+
+perform the re-injection. The response form the ARP request will
+
+
+increase the amount of traffic on the network and more IV collisions
+
+
+will occur.</p>
+
+
+
+
+
+<p>We can now see (Fig 1.9) the amount of IV collisions increases
+
+
+dramatically. In a few minutes we will have enough IVs to recover the
+
+
+secret key.</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/aireplay-faster.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Airodump IV collisions increased. (Fig.
+
+
+1.9)</i>
+
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>While airodump is running we can start aircrack to begin the
+
+
+statistical attack for recovering the secret key. We start the aircrack
+
+
+program by typing aircrack followed by the name of the file we saved
+
+
+the IVs to. Aircrack find the secret key in a matter of seconds (see
+
+
+Fig. 2).</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p><img src="http://i155.photobucket.com/albums/s306/eeprojects/aircrack2.gif"><br>
+
+
+
+
+
+<i>&nbsp; &nbsp;Aircrack using a statistical attack on IV
+
+
+collisions to find the secret key (Fig. 2).</i>
+
+
+</p>
+
+
+
+
+
+<br>
+
+
+
+
+
+<p>We have seen that the WEP security protocol doesn&rsquo;t
+
+
+provide a reliable means of security and should be avoided. We can see
+
+
+that with minimal effort an attacker can successfully find our secret
+
+
+key. Once the attacker is on our network he can carry out other
+
+
+malicious practices that could have severe effect on wireless network
+
+
+members. Fortunately there other security protocols have been created
+
+
+which do not have the vulnerabilities of WEP.</p>
+
+
+
+
+
+<h1>Advanced Security Protocols </h1>
+
+
+
+
+
+<p>WPA (Wi-Fi Protected Access) is a security protocol designed
+
+
+with the same intent as WEP but without the vulnerabilities. It was
+
+
+created in response to the several weaknesses found in WEP by
+
+
+researchers. In WPA the RC4 stream cipher is used with a 128 bit key
+
+
+and a 48 bit initialization vector (IV); an improvement from the 24 bit
+
+
+initialization vector (IV) that was used by WEP.</p>
+
+
+
+
+
+<p>Another improvement of WPA is the use of Temporal Key
+
+
+Integrity Protocol (TKIP) which provides per-packet key mixing,
+
+
+re-keying and integrity checking. TKIP ensures that a different key is
+
+
+used for every data packet that is encrypted. In WEP it was optional to
+
+
+use a different key for every data packet, in WPA it is required. The
+
+
+checksum CRC-32 isn&rsquo;t the only means of data integrity
+
+
+checking in WPA. An algorithm called Michael is used to increase the
+
+
+security of integrity checking. Michael (MIC) is encrypted and inserted
+
+
+between the data packets and CRC making it much more difficult to
+
+
+tamper with the checksum.</p>
+
+
+
+
+
+<p>An improvement of WPA is WPA2 which implements TKIP and uses
+
+
+CCMP (Counter Mode with Cipher Block Chaining Message Authentication
+
+
+Code Protocol). CCMP utilizes the AES algorithm (Advanced Standard
+
+
+Encryption) which is a block cipher adopted by the US Government. AES
+
+
+encryption meets the Federal Information Processing Standard (FIPS)
+
+
+140-2 requirement. FIPS are standards developed by the United States
+
+
+Government for use by all non-government agencies.</p>
+
+
+
+
+
+<p>It is a relief to know that new devices wishing to be Wi-Fi
+
+
+certified must first be WPA2 certified. Currently not all wireless
+
+
+devices support WPA and WPA2; users should consult their manufactures
+
+
+manual for compatibility. If WPA2 is compatible with a users devices
+
+
+(wireless network cards and access points) it is highly recommend to
+
+
+use the WPA2 security protocol.</p>
+
+
+
+
+
+<h1>Conclusion</h1>
+
+
+
+
+
+<p>We have learned what a wireless network is and why we
+
+
+shouldn&rsquo;t use the wireless equivalency protocol to secure it.
+
+
+Through our study we have examined the RC4 stream cipher encryption
+
+
+algorithm and how it is implemented in WEP. It has been evident that
+
+
+the initiation vector used in WEP doesn&rsquo;t provide a bit
+
+
+length large enough to prevent keystream repetition. Once we were able
+
+
+to capture initialization vector collisions we were able to use a
+
+
+statistical attack to find the secret key. Once we knew the secret key
+
+
+we were able to connect to the wireless network as a trusted user and
+
+
+could then carry out malicious practices. As a result we concluded that
+
+
+the wireless equivalency privacy protocol (WEP) should be avoided.</p>
+
+
+
+
+
+<p> Later we covered other security protocols that have been
+
+
+created in response to the security issues in WEP. Such wireless
+
+
+security protocols discussed were WPA (Wi-Fi Access Protocol) and WPA2
+
+
+which is a more secure version of WPA. After reviewing various security
+
+
+enhancements of WPA2, we concluded that WPA2 was the best security
+
+
+protocol for our wireless networks. As an added comfort we were made
+
+
+aware of the fact that AES, an encryption algorithm used in WPA2, has
+
+
+been adopted by the US Government. With the vast amount of information
+
+
+gained from this research paper, it is suggested that the reader share
+
+
+his knowledge with others about why WEP should be avoided.</p>
+
+
+
+
+
+<p><a href="#top">back to top</a></p>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</body>
+
+
+</html>
+
+

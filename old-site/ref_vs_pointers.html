@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+
+  <title>eeprojects : References vs Pointers</title>
+
+
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+  <link href="main.css" type="text/css" rel="STYLESHEET">
+
+
+
+  <meta content="MSHTML 6.00.2900.3059" name="GENERATOR">
+
+
+
+  <meta http-equiv="PRAGMA" content="NO-CACHE">
+
+
+
+  <meta http-equiv="PRAGMA" content="NO-CACHE">
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+<body>
+
+
+
+<div id="container">
+
+<div id="navigation">
+
+<ul>
+
+
+
+  <li><a href="">News</a> </li>
+
+
+
+  <li><a href="projects.html">Projects</a>
+
+  </li>
+
+
+
+  <li><a href="videos.html">Videos</a></li>
+
+
+
+  <li><a href="coding.html">Code</a> </li>
+
+
+
+  <li><a href="./challenges.html">Challenges</a> </li>
+
+  <li><a href="./forums">Forums</a> </li>
+
+  <li><a href="offtopic.html">Off Topic</a>
+
+  </li>
+
+
+
+  <li><a href="./links.html">Links</a></li>
+
+  <li><a href="contact.html">Contact</a> </li>
+
+
+
+</ul>
+
+
+</div>
+
+
+
+<div id="contents">
+
+<h1 class="title">References vs Pointers</h1>
+
+
+
+<p>
+
+It's good to know when to use references vs using pointers.</p>
+
+<p>
+
+Full text can be found here: <a href="http://cs-people.bu.edu/dbuzan/cs112/lab4a/lab2.html">http://cs-people.bu.edu/dbuzan/cs112/lab4a/lab2.html</a>
+
+</p>
+
+<i>
+
+<p>Our suggestions for the usage of references as arguments to functions
+
+are therefore the following:
+
+<ul>
+
+<li>
+
+In those situations where a called function does not alter its arguments,
+
+a copy of the variable can be passed.</li>
+
+</ul>
+
+
+
+<ul>
+
+<li>
+
+When a function changes the value of its argument, the address or a reference
+
+can be passed, whichever you prefer.</li>
+
+</ul>
+
+
+
+<ul>
+
+<li>
+
+
+
+References have an important role in those cases where the argument will
+
+not be changed by the function, but where&nbsp;&nbsp; it is desirable to
+
+pass a reference to the variable instead of a copy of the whole variable.
+
+Such a situation occurs when a large variable, e.g., a struct, is passed
+
+as argument, or is returned from the function. In these cases the copying
+
+operations tend to become significant factors when the entire structure
+
+must be copied, and it is preferred to use references. If the argument
+
+isn't changed by the function, or if the caller shouldn't change the returned
+
+information, the use of the const keyword is appropriate and should be
+
+used.</li>
+
+</ul>
+
+&nbsp;
+
+<br>A number of differences between pointers and references is pointed out
+
+in the list below:
+
+<br><br><ul>
+
+<li>
+
+A reference cannot exist by itself, i.e., without something to refer to.</li>
+
+
+
+<li>
+
+References can, however, be declared as external. These references were
+
+initialized elsewhere.</li>
+
+
+
+<li>
+
+Reference may exist as parameters of functions: they are initialized when
+
+the function is called.</li>
+
+
+
+<li>
+
+References may be used in the return types of functions. In those cases
+
+the function determines to what the return value will refer.</li>
+
+
+
+<li>
+
+Reference may be used as data members of classes.</li>
+
+
+
+<li>
+
+In contrast, pointers are variables by themselves. They point at something
+
+concrete or just ``at nothing''.</li>
+
+
+
+<li>
+
+
+
+References are aliases for other variables and cannot be re-aliased to
+
+another variable. Once a reference is defined, it refers to its particular
+
+variable.</li>
+
+
+
+<li>
+
+In contrast, pointers can be reassigned to point to different variables.</li>
+
+
+
+<li>
+
+When an address-of operator &amp; is used with a reference, the expression
+
+yields the address of the variable to which the reference applies. In contrast,
+
+ordinary pointers are variables themselves, so the address of a pointer
+
+variable has nothing to do with the address of the variable pointed to.</li>
+
+</ul>
+
+</i> <i> - http://cs-people.bu.edu/dbuzan/cs112/lab4a/lab2.html</i>
+
+<span style="font-weight: bold;"></span></div>
+
+
+
+</div>
+
+
+
+
+</body>
+
+</html>
+

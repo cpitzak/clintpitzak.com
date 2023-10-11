@@ -1,0 +1,524 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+
+<html>
+
+
+<head>
+
+
+  <title>eeprojects : Challenges</title>
+
+
+
+
+
+ <meta content="Programming challenges to keep your mind sharp and your wit quick." name="description">
+
+
+
+
+
+  <meta content="programming, hacking, computer science, disassembly, c++, c, programming language, stack, pointers, hack, challenge, problems" name="keywords">
+
+
+
+
+
+
+
+
+
+
+
+  <link href="main.css" type="text/css" rel="STYLESHEET">
+
+
+
+
+
+  <meta content="MSHTML 6.00.2900.3059" name="GENERATOR">
+
+
+  <script type="text/javascript" src="prettify.js"></script>
+
+
+
+
+
+</head>
+
+
+
+
+
+
+
+
+
+
+<body onload="prettyPrint()">
+
+
+
+
+
+<div id="container">
+
+
+<div id="navigation">
+
+
+<ul>
+
+
+
+
+
+  <li><a href="">News</a> </li>
+
+
+
+
+
+  <li><a href="projects.html">Projects</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="videos.html">Videos</a></li>
+
+
+
+
+
+  <li><a href="coding.html">Code</a> </li>
+
+
+
+
+
+  <li><a href="./challenges.html">Challenges</a> </li>
+
+
+  <li><a href="./forums">Forums</a> </li>
+
+
+  <li><a href="offtopic.html">Off Topic</a>
+
+
+  </li>
+
+
+
+
+
+  <li><a href="./links.html">Links</a></li>
+
+
+  <li><a href="contact.html">Contact</a> </li>
+
+
+
+
+
+</ul>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div id="contents">
+
+
+<h1 class="title">#55 Challenge - Buffer Overflow</h1>
+
+
+</div>
+
+
+</p>
+
+
+<p>
+
+
+<u>Credits</u>: Computer Systems: A Programmer's Perspective<br>
+
+
+<u>Authors</u>: Randal E. Bryant and David R. O'Hallaron<br>
+
+
+<u>Samples of book</u>: <a href="http://csapp.cs.cmu.edu/public/manuscript.html">http://csapp.cs.cmu.edu/public/manuscript.html</a><br>
+
+
+<b>Disclaimer:</b> I have written permission from the author to post his labs on my site.
+
+
+</p>
+
+
+
+
+
+<p>
+
+
+<u>Solution</u>: <a href="forums/index.php?topic=2.0">posted here</a>
+
+
+</p>
+
+
+
+
+
+<p>
+
+
+Your job is to carefully construct a string that when entered in as user input will cause the program to execute a function that it was not intented to execute.
+
+
+</p>
+
+
+<p>
+
+
+You will need to look at the disassembly to see how you should construct your string. You will find the linux program: objdump useful. 
+
+
+<pre class=prettyprint>
+
+
+unix> objdump -d bufbomb > bufbomb.disassembly
+
+
+</pre>
+
+
+</p>
+
+
+<p>
+
+
+Further instructions are below. You can download the files you need for this challenge here: <a href="./bin/bufferOverflow.tar.gz"> bufferOverflow.tar.gz</a>
+
+
+
+
+
+ The function getbuf is called within bufbomb  by a function test having the following C code:
+
+
+
+
+
+</p><p><pre class=prettyprint>
+
+
+      void test()
+
+
+      {
+
+
+          int val;
+
+
+          volatile int local = 0xdeadbeef;
+
+
+          val = getbuf();
+
+
+          /* Check for corrupted stack */
+
+
+          if (local != 0xdeadbeef) {
+
+
+              printf("Sabotaged!: the stack has been corrupted\n");
+
+
+          }
+
+
+          else if (val == cookie) {
+
+
+              printf("Boom!: getbuf returned 0x%x\n", val);
+
+
+              validate(3);
+
+
+          }
+
+
+          else {
+
+
+              printf("Dud: getbuf returned 0x%x\n", val);
+
+
+          }
+
+
+      }
+
+
+  
+
+
+</pre>
+
+
+
+
+
+</p><p>
+
+
+When getbuf executes its return statement (line 5 of getbuf), the program ordinarily resumes execution within function test (at line 8 of this function). Within the  bufbomb, there is a function smoke having the following C code:
+
+
+
+
+
+</p><p><pre class=prettyprint>
+
+
+    void smoke()
+
+
+    {
+
+
+        entry_check(0); /* Make sure entered this function properly */
+
+
+        printf("Smoke!: You called smoke()\n");
+
+
+        validate(0);
+
+
+        exit(0);
+
+
+    }
+
+
+  </pre>
+
+
+</p><p>
+
+
+Your task is to get bufbomb to execute the code for smoke when getbuf executes its return statement, rather than returning to test. You can do this by supplying an exploit string that overwrites the stored return pointer in the stack frame for getbuf with the address of the first instruction in smoke. Note that your exploit string may also corrupt other parts of the stack state, but this will not cause a problem, since smoke causes the program to exit directly. 
+
+
+</p>
+
+
+<p>The bufbomb program reads a string from standard input with a function getbuf having the following C code:
+
+
+
+
+
+<pre class=prettyprint>
+
+
+  int getbuf()
+
+
+  {
+
+
+      char buf[12];
+
+
+      Gets(buf);
+
+
+      return 1;
+
+
+  }
+
+
+</pre></p>
+
+
+<p>
+
+
+The function Gets is similar to the standard library function gets.  It reads a string from standard input (terminated by &#8216;\n&#8217; or end-of-file) and stores it (along with a null terminator) at the specified destination.  In this code, the destination is an array buf having sufficient space for 12 characters.
+
+
+</p><p>
+
+
+Neither Gets nor gets has any way to determine whether there is enough space at the destination to store the entire string.  Instead, they simply copy the entire string, possibly overrunning the bounds of the storage allocated at the destination.
+
+
+</p><p>
+
+
+If the string typed by the user to getbuf is no more than 11 characters long, it is clear that getbuf will return 1, as shown by the following execution example:
+
+
+</p><p><pre class=prettyprint>
+
+
+  unix> bufbomb
+
+
+  Type string:  howdy doody
+
+
+  Dud: getbuf returned 0x1
+
+
+</pre>
+
+
+</p><p>
+
+
+If we type a longer string, typically an error occurs:
+
+
+</p><p><pre class=prettyprint>
+
+
+  unix> bufbomb
+
+
+  Type string: This string is too long
+
+
+  Ouch!: You caused a segmentation fault!
+
+
+</pre>
+
+
+</p><p>
+
+
+As the error message indicates, overrunning the buffer typically causes the program state to be corrupted, leading to a memory access error.  Your task is to be more clever with the strings you feed bufbomb so that it does more interesting things.  These are called exploit strings.  </p>
+
+
+<p>
+
+
+Your exploit strings will typically contain byte values that do not correspond to the ASCII values for printing characters.  The program sendstring can help you generate these raw strings.  It takes as input a hex-formatted string.  In this format, each byte value is represented by two hex digits.  For example, the string &#8220;012345&#8221; could be entered in hex format as &#8220;30 31 32 33 34 35&#8221; since the ASCII code for decimal digit 0 is 0x30 and so forth.  Non-hex digit characters are ignored, including the blanks in the example shown. 
+
+
+</p><p>
+
+
+If you place a hex-formatted exploit string in the file exploit.txt, you can apply the raw string to bufbomb in at least two different ways: 
+
+
+
+
+
+</p><p>
+
+
+   1. You can set up a series of pipes to pass the string through sendstring. 
+
+
+
+
+
+</p><p><pre class=prettyprint>
+
+
+        unix> cat exploit.txt | sendstring | bufbomb -t bob
+
+
+</pre>
+
+
+</p><p>
+
+
+   2. You can store the raw string in a file and use I/O redirection to supply it to bufbomb: 
+
+
+
+
+
+</p><p><pre class=prettyprint>
+
+
+        unix> sendstring < exploit.txt > exploit-raw.txt
+
+
+        unix> bufbomb -t bovik < exploit-raw.txt
+
+
+</pre>
+
+
+</p><p>
+
+
+This second approach can also be used when running bufbomb from within gdb: 
+
+
+
+
+
+</p><p><pre class=prettyprint>
+
+
+  unix> gdb /home/user/bufbomb
+
+
+  (gdb) run -t bob < exploit-raw.txt
+
+
+</pre>
+
+
+</p><p>
+
+
+One important point:  your exploit string must not contain byte value 0x0A at any intermediate position, since this is the ASCII code for newline (&#8216\n&#8217).  When Gets encounters this byte, it will assume you intended to terminate the string.  Sendstring will warn you if it encounters this byte value. That's about it. 
+
+
+
+
+
+</p>
+
+
+
+
+
+</div><br>
+
+
+</body>
+
+
+</html>
+
+

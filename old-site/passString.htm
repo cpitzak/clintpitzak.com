@@ -1,0 +1,82 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="passString_files/nopaste.css">
+<link rel="icon" href="http://rafb.net/nopaste_favicon.gif" type="image/gif">
+<link rel="shortcut icon" href="http://rafb.net/nopaste_favicon.gif" type="image/gif">
+<meta name="robots" content="noarchive">
+<title>Nopaste - Find location of letter in String</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16807791-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head><body><div style="border-bottom: 2px solid gray;">
+<table border="0" cellpadding="1" cellspacing="2" width="100%">
+<tbody><tr>
+  <td><small>Pasted as <b>C</b> by <b>Clint</b> <span id="controls">[ <a href="http://rafb.net/paste/">Create new paste</a> | <a href="http://rafb.net/paste/remove.php?p=v9JBTp28&amp;t=7da3a84d9a5b381d0afda1b4c47eeab9741bff07">Remove this paste</a> ]</span></small></td>
+</tr>
+<tr>
+  <td><small>Description: Find location of letter in String</small></td>
+</tr>
+<tr>
+  <td><small>URL: http://rafb.net/p/v9JBTp28.html</small></td>
+</tr>
+</tbody></table>
+</div>
+
+<table border="0" cellpadding="1" cellspacing="2">
+<tbody><tr>
+  <td><pre class="code">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></td>
+  <td width="100%"><pre class="code" id="codemain"><span class="keyword">#include</span> &lt;stdio.h&gt;
+&nbsp;
+<span class="keyword">int</span> findX (<span class="keyword">char</span> *s){
+&nbsp;
+        <span class="keyword">int</span> j;
+&nbsp;
+        <span class="keyword">for</span> (j = 0; s[j] != <span class="literal">'\0'</span>; j++)
+                <span class="keyword">if</span> (s[j] == <span class="literal">'x'</span>)
+                        <span class="keyword">return</span> j;
+&nbsp;
+        <span class="keyword">return</span> -1;
+}
+&nbsp;
+<span class="keyword">int</span> main(){
+&nbsp;
+        <span class="keyword">char</span> *str = <span class="literal">"This is my string x 2"</span>;
+&nbsp;
+        printf (<span class="literal">"%d\n"</span>, findX(str));
+&nbsp;
+        <span class="keyword">return</span> 0;
+}</pre></td>
+</tr>
+</tbody></table>
+</body></html>
